@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <!-- Web Font / @font-face : BEGIN -->
+	<!-- NOTE: If web fonts are not required, lines 10 - 27 can be safely removed. -->
+    
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+    <!--[if mso]>
+        <style>
+            * {
+                font-family: sans-serif !important;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+        <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
+
+    <!-- Web Font / @font-face : END -->
+    
+	<!-- CSS Reset -->
+    <style>
+
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+            font-family: 'Open Sans', sans-serif;
+            font-family: 'Roboto', sans-serif; 
+            font-size: 14px;
+            color: #545454
+        }
+        
+        /* What it does: Stops email clients resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        /* What is does: Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
+            margin:0 !important;
+        }
+        
+        /* What it does: Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+                
+        /* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+        table table table {
+            table-layout: auto; 
+        }
+        
+        /* What it does: Uses a better rendering method when resizing images in IE. */
+        img {
+            -ms-interpolation-mode:bicubic;
+        }
+        
+        /* What it does: A work-around for iOS meddling in triggered links. */
+        *[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+
+        /* What it does: A work-around for Gmail meddling in triggered links. */
+        .x-gmail-data-detectors,
+        .x-gmail-data-detectors *,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+        }
+
+        /* What it does: Prevents Gmail from displaying an download button on large, non-linked images. */
+        .a6S {
+	        display: none !important;
+	        opacity: 0.01 !important;
+        }
+        /* If the above doesn't work, add a .g-img class to any image in question. */
+        img.g-img + div {
+	        display:none !important;
+	   	}
+
+        /* What it does: Prevents underlining the button text in Windows 10 */
+        .button-link {
+            text-decoration: none !important;
+        }
+      
+        /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+        /* Thanks to Eric Lepetit @ericlepetitsf) for help troubleshooting */
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) { /* iPhone 6 and 6+ */
+            .email-container {
+                min-width: 375px !important;
+            }
+            .client_logo {
+                height: 50%;
+            }
+            invoice_info{
+                padding-right: 30px;
+            }
+        }
+        
+        @media only screen and (max-device-width: 320px) { /* iPhone 6 and 6+ */
+            .email-container {
+                min-width: 320px !important;
+            }
+            .client_logo {
+                max-height: 50%;
+                width: auto;
+            }
+
+            .customer_info{
+                padding-right: 20px;
+            }
+            .invoice_info {
+                padding-right: 20px;
+            }
+            .client_info {
+                padding-left: 20px;
+            }
+            
+        }
+    
+    </style>
+    
+    <!-- Progressive Enhancements -->
+    <style>
+        
+        /* What it does: Hover styles for buttons */
+        .button-td,
+        .button-a {
+            transition: all 100ms ease-in;
+        }
+        .button-td:hover,
+        .button-a:hover {
+            background: #555555 !important;
+            border-color: #555555 !important;
+        }
+        .email-container{
+            box-shadow: 0 0 20px #545454;
+        }
+        .client_info {
+/*            background-color: mediumvioletred;*/
+        }
+        .attr_headers{
+/*            color: #999994;*/
+            color: #545454;
+            font-weight: bold;
+        }
+        .client_name{
+            font-weight: bold;
+        }
+        .client_address{
+            font-size: 13px;
+            line-height: 18px;
+            color: #b2b2b2;
+        }
+
+    </style>
+
+</head>
+    
+<body width="100%" bgcolor="#999994" style="margin: 0; mso-line-height-rule: exactly;">
+    <center style="width: 100%; background: #999994;">
+
+        <!-- Visually Hidden Preheader Text : BEGIN -->
+        <div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;">
+            (Optional) This text will appear in the inbox preview, but not the email body.
+        </div>
+        <!-- Visually Hidden Preheader Text : END -->
+
+        <!--    
+            Set the email width. Defined in two places:
+            1. max-width for all clients except Desktop Windows Outlook, allowing the email to squish on narrow but never go wider than 600px.
+            2. MSO tags for Desktop Windows Outlook enforce a 600px width.
+        -->
+        <div style="max-width: 600px; margin: auto;" class="email-container">
+            <!--[if mso]>
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center">
+            <tr>
+            <td>
+            <![endif]-->
+
+            <!-- Email Header : BEGIN -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 1200px; padding: 20px 0px">
+                <tr>
+                    <td bgcolor="#FECB00" height="20px" style="padding: 20px; text-align: left; font-size: 20px; font-weight: bold; line-height: 20px; color: #555555;">
+                        <span class = 'invoice_number'>Invoice # </span>
+                        <span class = 'document_number '>1100</span>
+                   </td>  
+                </tr>
+                <!-- Clear Spacer : BEGIN -->
+                <tr>
+                    <td height="1" style="line-height: 0px; background-color: #d2d2d2">
+                        &nbsp;
+                    </td>
+                </tr>
+                <!-- Clear Spacer : END -->
+            </table>
+            
+            <!-- Email Header : END -->
+            
+            <!-- Email Body : BEGIN -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 600px;">
+
+                <!-- Row 1 : BEGIN -->
+                <tr>
+                    <td bgcolor="#ffffff">
+                        <table class = 'row_1' role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                                <td class = 'client_logo' style="padding: 20px 30px; font-size: 15px; line-height: 20px; color: #555555;">
+                                    <img class = 'client_logo' src="./docs/assets/logo.png" alt = "Company Logo" border="0" style = 'width: auto; height: 100px; float:left;'>
+                                    <br>
+                                </td>
+                            
+                                <td class = 'customer_info' style="text-align: right; padding: 30px 30px; font-size: 13px; line-height: 18px; color: #b2b2b2;">
+                                    <span class = 'customer_name' style = 'font-weight: bold; color: #545454; font-size: 15px;'>Jay Larson</span><br>
+                                    <span class = 'customer_streetAddress'>J2311 31st Ave</span><br>
+                                    <span class = 'customer_cityAddress'>San Francisco, CA 94116<br>United States</span>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </td>
+                </tr>
+                <!-- Row 1 : END -->
+               
+                <!-- Clear Spacer : BEGIN -->
+                <tr>
+                    <td height="1" style="font-size: 0; line-height: 0; background-color: #d2d2d2">
+                        &nbsp;
+                    </td>
+                </tr>
+                <!-- Clear Spacer : END -->
+                
+                <!-- Row 2 - 2 Even Columns : BEGIN -->
+                <tr>
+                    <td bgcolor="#ffffff" align="center" height="100%" valign="top" width="100%" style="padding-bottom: 20px">
+                        <table role="presentation" border="0" cellpadding="10" cellspacing="0" align="center" width="100%" style="max-width:560px;">
+<!--                        Second Row BEGIN-->
+                            <tr class = 'row_2'>
+<!--                            Second Row - left column BEGIN-->
+                                <td class = 'client_info' align="center" valign="top" width="50%">
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px;text-align: left;">
+<!--                                        client header-->
+                                        <tr class = 'client_header'>
+                                            <td style="text-align: left; padding: 0 10px; color: #999994">
+                                                <span class = 'attr_headers'>Billed To</span>
+<!--                                                <img src="http://placehold.it/200" width="200" height="" alt="alt_text" border="0" align="center" style="width: 100%; max-width: 200px; background: #dddddd; font-size: 15px; line-height: 20px; color: #555555;">-->
+                                            </td>
+                                        </tr>
+                                        
+<!--                                        Inject API values for 'Client Info'-->
+                                        <tr class = 'client_info'>
+                                            <td style="text-align: left; font-size: 15px; line-height: 20px; color: #555555; padding: 10px 10px 0;" class="stack-column-center">
+                                                <span class = 'client_name'>Anton Chikov</span><br>
+                                                <span class = 'client_company'>Independent Co.</span><br>
+                                                <span class = 'client_address'>600 California St.<br>San Francisco, CA 94108<br>United States</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+<!--                        Second Row- left column: END-->   
+                                
+<!--                           Second Row -right column: BEGIN-->
+                                <td class = 'invoice_info' align="center" valign="top" width="50%">
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px;text-align: left;">
+                                        <tr class = 'invoice_date'>
+                                            <td class = 'date' style="text-align: right;">
+                                                <span class = 'attr_headers'>Due :</span>
+                                                <span class = 'date_value' style = ''> 2.28.2018</span>    
+                                            </td>
+                                        </tr>
+<!--                                        amount-->
+                                        <tr class = 'invoice_amount'>
+                                            <td class = 'amount' style="text-align: right; padding:10px 0;">
+                                                <span class = 'attr_headers'>Total :</span>  
+                                                <span class = 'amount_value' style = 'font-size:20px; font-weight:bold;'> $&nbsp;2000</span>    
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+<!--                           Second Row -right column: END-->
+                            </tr>
+                        </table>
+                        <br>
+                        <!-- Button : Begin -->
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
+                                        <tr>
+                                            <td style="border-radius: 3px; background: #222222; text-align: center;" class="button-td">
+                                                <a href="http://www.google.com" style="background: #222222; border: 15px solid #222222; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
+                                                    <span style="color:#ffffff;" class="button-link">&nbsp;&nbsp;&nbsp;&nbsp;Make Payment&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- Button : END -->
+                                    <br>
+                    </td>
+                </tr>
+                <!-- Row 2 Two Even Columns : END -->
+
+                <!-- Clear Spacer : BEGIN -->
+                <tr>
+                    <td height="1" style="font-size: 0; line-height: 0; background-color: #d2d2d2">
+                        &nbsp;
+                    </td>
+                </tr>
+                <!-- Clear Spacer : END -->
+
+                <!-- Disregard Message : BEGIN -->
+                <tr>
+                    <td bgcolor="#ffffff">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                                <td style="padding: 10px 30px; color: #555555; text-align: center">
+                                    <span style="width: 100%; font-style:italic; font-size: 12px">If you have received this message in error, please disregard.</span><br>
+<!--                                    <span style="float:right; text-align: right; width: 100%;"><img src="./docs/assets/powered_by_i3.png" alt = "AccountingSuite Logo" style = 'width:auto;height:30px;border:0;padding-top:10px;'></span>  -->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- Disregard Message : END -->
+                
+                <!-- powered by logo: BEGIN -->
+                <tr>
+                    <td bgcolor="#ffffff">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr class = 'footer_logo'>
+                                <td style="padding:10px 20px; float:right;"> 
+                                    <span style = 'font-style:italic; font-size:10px;'>Powered By</span>
+                                    <img src="./docs/assets/as_logo_tm_transparent.png" alt = "AccountingSuite Logo" style = 'width:auto; height:30px; border:0;'>  
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- powered by logo: END -->
+
+            </table>
+            <!-- Email Body : END -->
+          
+            <!-- Email Footer : BEGIN -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 680px;">
+                <tr>
+                    <td style="padding: 20px 10px;width: 100%;font-size: 12px; line-height:18px; text-align: center; color: #888888;" class="x-gmail-data-detectors">
+                        <webversion style="color:#cccccc; text-decoration:underline; font-weight: bold;">View as a Web Page</webversion>
+                        <br>
+                        Company Name<br>123 Fake Street, SpringField, OR, 97477 US<br>(123) 456-7890
+                        <br>
+                        <unsubscribe style="color:#888888; text-decoration:underline;">unsubscribe</unsubscribe>
+                    </td>
+                </tr>
+            </table>
+            <!-- Email Footer : END -->
+
+            <!--[if mso]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </div>
+    </center>
+</body>
+</html>
