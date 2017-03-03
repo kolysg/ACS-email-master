@@ -177,6 +177,17 @@
             line-height: 18px;
             color: #b2b2b2;
         }
+        .client_title{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .client_company_title{
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 10px;
+            height: 100px;
+            width:auto;
+        }
 
     </style>
 
@@ -230,16 +241,29 @@
                     <td bgcolor="#ffffff">
                         <table class = 'row_1' role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
+                                <!--If the company logo exists BEGIN-->
                                 <td class = 'client_logo' style="padding: 20px 30px; font-size: 15px; line-height: 20px; color: #555555;">
                                     <img class = 'client_logo' src="./docs/assets/client_logo/logo.png" alt = "Company Logo" border="0" style = 'width: auto; height: 100px; float:left;'>
                                     <br>
                                 </td>
-                            
+                                <!--If the company logo exists END-->
+                                
+                                <!--If the company logo DOES NOT exist, show TITLE-- BEGIN-->
+<!--
+                                <td class = 'client_title' style="padding: 20px 30px; font-size: 15px; line-height: 20px; color: #555555;">
+                                    <p class = 'client_title' style = 'width: auto; height: 100px; float:left;'></p>
+                                    <br>
+                                </td>
+-->
+                                <!--If the company logo DOES NOT exist, show TITLE-- END-->
+                                
+                                <!-- Client-Address-- BEGIN-->
                                 <td class = 'customer_info' style="text-align: right; padding: 30px 30px; font-size: 13px; line-height: 18px; color: #b2b2b2;">
                                     <span class = 'customer_name' style = 'font-weight: bold; color: #545454; font-size: 15px;'>Jay Larson</span><br>
                                     <span class = 'customer_streetAddress'>J2311 31st Ave</span><br>
                                     <span class = 'customer_cityAddress'>San Francisco, CA 94116<br>United States</span>
                                 </td>
+                                <!-- Client-Address-- END-->
                             </tr>
                             
                         </table>
@@ -287,10 +311,18 @@
 <!--                           Second Row -right column: BEGIN-->
                                 <td class = 'invoice_info' align="center" valign="top" width="50%">
                                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size: 14px;text-align: left;">
+<!--                                        invoice date-->
                                         <tr class = 'invoice_date'>
                                             <td class = 'date' style="text-align: right;">
                                                 <span class = 'attr_headers'>Due :</span>
                                                 <span class = 'date_value' style = ''> 2.28.2018</span>    
+                                            </td>
+                                        </tr>
+<!--                                        Balance-->
+                                        <tr class = 'invoice_date'>
+                                            <td class = 'date' style="text-align: right;">
+                                                <span class = 'attr_headers'>Balance :</span>
+                                                <span class = 'date_value' style = ''> 0.00</span>    
                                             </td>
                                         </tr>
 <!--                                        amount-->
@@ -345,6 +377,7 @@
                 <!-- User Input Message : END -->
                         
 <!-- Button : Begin -->
+<!--
         <tr class = 'pay_button'>
             <td bgcolor="#ffffff" align="center" height="100%" valign="top" width="100%" style="padding: 20px 0;">
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
@@ -356,9 +389,12 @@
                         </td>
                     </tr>
             </table>
+-->
             <!-- Button : END -->
+<!--
             </td>
         </tr>
+-->
                 <!-- Row 2 Two Even Columns : END -->
         
                 
@@ -433,18 +469,17 @@
 <!--Script for injecting image or company name for client    -->
 <!--
 <script>
-  function inject_clientLogo() {
+function inject_clientLogo() {
   var client_company = {
     url: "",
     title: 'Facebook'
   }
   if (client_company.url === "") {
-    $('.client').append('<img alt=' + client_company.title + ' class="client_company" />');
+    $('.client').append('<img alt=' + client_company.title + ' class="client_company_title" />');
 
   } else {
-    $('.client').append('<img src=' + client_company.url + ' class="client_company" />');
+    $('.client').append('<img src=' + client_company.url + ' class="client_company_logo" />');
   }
-
 };
 
 inject_clientLogo();  
